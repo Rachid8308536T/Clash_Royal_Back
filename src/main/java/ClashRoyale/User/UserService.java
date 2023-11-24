@@ -1,6 +1,8 @@
 package ClashRoyale.User;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +24,8 @@ public class UserService {
                     .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
         }
 
-        public User create(User user) {
+
+    public User create(User user) {
             // Création d'un utilisateur.
             return repository.save(user);
         }
@@ -43,6 +46,18 @@ public class UserService {
             // Supprime un utilisateur par son Id.
             repository.deleteById(id);
         }
+
+
+    public boolean checkIfExist(UserDTO userDTO){
+    User user = repository.findByPseudonyme(userDTO.getPseudonyme());
+
+    if(user.getPassword().equals(userDTO.getPassword())){
+        return true;
     }
+    return false;
+    }
+}
+
+
 
 
